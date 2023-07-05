@@ -256,7 +256,7 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
             }
         }
         cout << " (";
-        for (int index = 0; index != strlen (valid_letters); index++)
+        for (auto index = 0; index != strlen (valid_letters); index++)
         {
             letter = valid_letters [index];
             cout << letter;
@@ -265,7 +265,7 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
                 cout << '/';
             }
         }
-        for (int index = 0; index != strlen (not_available_letters); index++)
+        for (auto index = 0; index != strlen (not_available_letters); index++)
         {
             if (index != strlen (not_available_letters))
             {
@@ -510,7 +510,7 @@ void read (ifstream& fin, int& lives, bool& cave_var)
             space++;
         }
     } while (((read_letter != ';' && read_letter != '{') && (read_letter != '|' && read_letter != '[')) && read_letter != '}');
-    if (read_letter == '{')
+    if (read_letter == '{') //Dust Monster
     {
         cout << endl;
         forced_mon_en en;
@@ -520,11 +520,11 @@ void read (ifstream& fin, int& lives, bool& cave_var)
         mon_en (lives, en);
         cave_var = false;
     }
-    else if (read_letter == '|')
+    else if (read_letter == '|') //Cave game
     {
         cave_var = true;
     }
-    else if (read_letter == '[')
+    else if (read_letter == '[') //3 zombies
     {
         forced_mon_en en;
         en.forced = true;
@@ -535,7 +535,7 @@ void read (ifstream& fin, int& lives, bool& cave_var)
         cave_var = false;
         read (fin, lives, cave_var);
     }
-    else if (read_letter == '}')
+    else if (read_letter == '}') //fighting the investigation monster
     {
         forced_mon_en en;
         en.forced = true;
