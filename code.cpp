@@ -114,13 +114,17 @@ void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& o
                 cout << endl;
             }
         }
-        else if ((skip == true && tenlives == true) && num == 13)
+        else if ((skip == true && tenlives == true) && num == 13) //if player wins the movie scene
         {
             num = 15;
         }
-        else if ((skip == true && tenlives == false) && num == 13)
+        else if ((skip == true && tenlives == false) && num == 13) // if player loses the movie scene
         {
             num = 14;
+        }
+        else if (skip == true && num == 4) // if player loses against Sean
+        {
+            pass = true;
         }
     } while (pass == false);
     if (skip == false)
@@ -315,6 +319,12 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
             tenlives = true;
         }
     }
+    else if (lives == 0)
+    {
+        game_over = true;
+        skip = true;
+        out_of_lives = true;
+    }
     else if (lives != 0)
     {
         cout << "Something's wrong. Press any letter and Enter to exit: ";
@@ -370,7 +380,7 @@ void mon_en (int& lives, forced_mon_en en)
     if (ran_num <= 30)
     {
         srand (time(0));
-        mon_num = rand () % (10-0) + 0;
+        mon_num = rand () % (10-1) + 1;
         if (en.forced == true)
         {
             mon_num = en.type_of_mon;
