@@ -3,7 +3,6 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
-#include <cmath>
 #include <chrono>
 #include <thread>
 #include <iomanip>
@@ -53,7 +52,8 @@ int main ()
 {
   char trash;
   int num, lives;
-  bool end = false, end_all = false, game_over = false, cave_var = false, out_of_lives = false;
+  bool end, end_all, game_over, cave_var, out_of_lives;
+  //Introduction to the game
   cout << "Welcome to A Trip into The House - A Math Game! "
           << "Press any key and Enter to start: ";
   cin >> trash;
@@ -61,6 +61,7 @@ int main ()
   cout << "Instructions: the game will give you various options throughout the game.\nType the underlined letter to do a certain option.\nThere will also be various math problems you need to solve.\nJust type in the answer and press Enter.\nMake sure to keep a paper and pencil handy!\n" << endl;
   do
   {
+    //Initialization put here to ensure that every time the game is restarted, these variables will be reset.
     num = 1;
     end = false; 
     end_all = false;
