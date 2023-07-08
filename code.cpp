@@ -22,10 +22,14 @@ struct forced_mon_en
 class types_of_monsters
 {
     public:
-    int id_num;
+    types_of_monsters* build_and_return_list (istream& fin);
+    types_of_monsters* get_monster (types_of_monsters* monster, int mon_num);
+    int get_num_of_probs ();
     char before_dialogue [325];
-    int num_of_probs;
     char after_dialogue [60];
+    private:
+    int id_num;
+    int num_of_probs;
     types_of_monsters *ptr;
 };
 
@@ -336,43 +340,15 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
 
 void mon_en (int& lives, forced_mon_en en)
 {
-    int mon_num, loops, ran_num, temp_id, index, count = 0, enloops, oriloops;
+    int mon_num, loops, ran_num, temp_id, index, enloops, oriloops;
     char trash, read;
     bool pass;
-    types_of_monsters *firstptr, *temp_ptr;
+    types_of_monsters *firstptr, *temp_ptr, *monster;
+    types_of_monsters build;
     ifstream fin;
     srand (time(0));
     fin.open ("monsters.txt", ios::app);
-    temp_ptr = new types_of_monsters;
-    firstptr = temp_ptr;
-    while (count < 12)
-    {
-        fin >> temp_ptr->id_num;
-        fin.get (trash);
-        fin.get (trash);
-        fin.get (read);
-        for (index = 0; read != '"'; index++)
-        {
-            temp_ptr->before_dialogue [index] = read;
-            fin.get (read);
-        }
-        index++;
-        temp_ptr->before_dialogue [index] = '\0';
-        fin >> temp_ptr->num_of_probs;
-        fin.get (trash);
-        fin.get (trash);
-        fin.get (read);
-        for (index = 0; read != '"'; index++)
-        {
-            temp_ptr->after_dialogue [index] = read;
-            fin.get (read);
-        }
-        index++;
-        temp_ptr->after_dialogue [index] = '\0';
-        temp_ptr->ptr = new types_of_monsters;
-        temp_ptr = temp_ptr->ptr;
-        count++;
-    }
+    firstptr = build.build_and_return_list (fin);
     ran_num = rand() % (100-0) + 0;
     this_thread::sleep_for(chrono::seconds(1));  
     if (en.forced == true)
@@ -386,24 +362,12 @@ void mon_en (int& lives, forced_mon_en en)
             mon_num = en.type_of_mon;
             enloops = en.num_of_loops;
         }
-        temp_ptr = firstptr;
-        while (pass == false)
-        {
-            if (temp_ptr->id_num != mon_num)
-            {
-                temp_ptr = temp_ptr->ptr;
-                pass = false;
-            }
-            else
-            {
-                pass = true;
-            }
-        }
+        monster = build.get_monster (firstptr, mon_num);
         do
         {
             display_arr (temp_ptr->before_dialogue);
             cout << endl;
-            loops = temp_ptr->num_of_probs;
+            loops = build.get_num_of_probs();
             //loops = 1;
             oriloops = loops;
             do
@@ -549,4 +513,71 @@ void read (ifstream& fin, int& lives, bool& cave_var)
     {
         cave_var = false;
     }
+}
+
+types_of_monsters* types_of_monsters::build_and_return_list (istream& fin)
+{
+    auto count = 0, index = 0;
+    char trash, read;
+    types_of_monsters *firstptr, *temp_ptr;
+    temp_ptr = new types_of_monsters;
+    firstptr = temp_ptr;
+    while (count < 12)
+    {
+        fin >> temp_ptr->id_num;
+        fin.get (trash);
+        fin.get (trash);
+        fin.get (read);
+        for (index = 0; read != '"'; index++)
+        {
+            temp_ptr->before_dialogue [index] = read;
+            fin.get (read);
+        }
+        index++;
+        temp_ptr->before_dialogue [index] = '\0';
+        fin >> temp_ptr->num_of_probs;
+        fin.get (trash);
+        fin.get (trash);
+        fin.get (read);
+        for (index = 0; read != '"'; index++)
+        {
+            temp_ptr->after_dialogue [index] = read;
+            fin.get (read);
+        }
+        index++;
+        temp_ptr->after_dialogue [index] = '\0';
+        temp_ptr->ptr = new types_of_monsters;
+        temp_ptr = temp_ptr->ptr;
+        count++;
+    }
+    return firstptr;
+}
+
+types_of_monsters* types_of_monsters::get_monster (types_of_monsters* monster, int mon_num)
+{
+    auto pass = false;
+    char trash, read;
+    types_of_monsters *temp_ptr;
+
+    temp_ptr = monster;
+    
+    while (pass == false)
+    {
+        if (temp_ptr->id_num != mon_num)
+        {
+            temp_ptr = temp_ptr->ptr;
+            pass = false;
+        }
+        else
+        {
+            pass = true;
+        }
+    }
+
+    return temp_ptr;
+}
+
+int types_of_monsters::get_num_of_probs () 
+{
+    return num_of_probs;
 }
