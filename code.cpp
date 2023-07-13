@@ -25,6 +25,7 @@ class types_of_monsters
     types_of_monsters* build_and_return_list (istream& fin);
     types_of_monsters* get_monster (types_of_monsters* monster, int mon_num);
     int get_num_of_probs ();
+    void change_num_of_probs (int num);
     char before_dialogue [325];
     char after_dialogue [60];
     private:
@@ -363,9 +364,10 @@ void mon_en (int& lives, forced_mon_en en)
             enloops = en.num_of_loops;
         }
         monster = build.get_monster (firstptr, mon_num);
+        build.change_num_of_probs (monster->get_num_of_probs());
         do
         {
-            display_arr (temp_ptr->before_dialogue);
+            display_arr (monster->before_dialogue);
             cout << endl;
             loops = build.get_num_of_probs();
             //loops = 1;
@@ -381,7 +383,7 @@ void mon_en (int& lives, forced_mon_en en)
         } while (en.forced == true && enloops != 0);
         if (lives != 0)
         {
-            display_arr (temp_ptr->after_dialogue);
+            display_arr (monster->after_dialogue);
             cout << endl;
         }
     }
@@ -456,7 +458,7 @@ void read (ifstream& fin, int& lives, bool& cave_var)
     fin.get (read_letter);
     do
     {
-        this_thread::sleep_for(chrono::milliseconds(30));
+        //this_thread::sleep_for(chrono::milliseconds(30));
         if (read_letter != '|')
         {
             cout.put(read_letter);
@@ -580,4 +582,9 @@ types_of_monsters* types_of_monsters::get_monster (types_of_monsters* monster, i
 int types_of_monsters::get_num_of_probs () 
 {
     return num_of_probs;
+}
+
+void types_of_monsters::change_num_of_probs (int num)
+{
+    num_of_probs = num;
 }
