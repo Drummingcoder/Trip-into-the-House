@@ -7,6 +7,7 @@
 #include <thread>
 #include <iomanip>
 #include <cstring>
+#include <vector>
 #include "timmathfunctions.h"
 #include "timstreamandarr.h"
 #include "timotherfunctions.h"
@@ -26,9 +27,13 @@ class types_of_monsters
     types_of_monsters* get_monster (types_of_monsters* monster, int mon_num);
     int get_num_of_probs ();
     void change_num_of_probs (int num);
-    char before_dialogue [325];
+    void display_before ();
+    void display_after ();
     char after_dialogue [60];
+
     private:
+    vector <char> before;
+    vector <char> after;
     int id_num;
     int num_of_probs;
     types_of_monsters *ptr;
@@ -367,7 +372,7 @@ void mon_en (int& lives, forced_mon_en en)
         build.change_num_of_probs (monster->get_num_of_probs());
         do
         {
-            display_arr (monster->before_dialogue);
+            monster->display_before();
             cout << endl;
             loops = build.get_num_of_probs();
             //loops = 1;
@@ -383,7 +388,7 @@ void mon_en (int& lives, forced_mon_en en)
         } while (en.forced == true && enloops != 0);
         if (lives != 0)
         {
-            display_arr (monster->after_dialogue);
+            monster->display_after();
             cout << endl;
         }
     }
@@ -532,18 +537,18 @@ types_of_monsters* types_of_monsters::build_and_return_list (istream& fin)
         fin.get (read);
         for (index = 0; read != '"'; index++)
         {
-            temp_ptr->before_dialogue [index] = read;
+            temp_ptr->before.push_back(read);
             fin.get (read);
         }
         index++;
-        temp_ptr->before_dialogue [index] = '\0';
+        temp_ptr->before.push_back ('\0');
         fin >> temp_ptr->num_of_probs;
         fin.get (trash);
         fin.get (trash);
         fin.get (read);
         for (index = 0; read != '"'; index++)
         {
-            temp_ptr->after_dialogue [index] = read;
+            temp_ptr->after.push_back(read);
             fin.get (read);
         }
         index++;
@@ -587,4 +592,42 @@ int types_of_monsters::get_num_of_probs ()
 void types_of_monsters::change_num_of_probs (int num)
 {
     num_of_probs = num;
+}
+
+void types_of_monsters::display_before () 
+{
+    int index = 0;
+    bool pass;
+    do
+    {
+        cout << before [index];
+        if (index != before.size())
+        {
+            index++;
+            pass = false;
+        }
+        else
+        {
+            pass = true;
+        }
+    } while (pass == false);
+}
+
+void types_of_monsters::display_after ()
+{
+    int index = 0;
+    bool pass;
+    do
+    {
+        cout << after [index];
+        if (index != after.size())
+        {
+            index++;
+            pass = false;
+        }
+        else
+        {
+            pass = true;
+        }
+    } while (pass == false);
 }
