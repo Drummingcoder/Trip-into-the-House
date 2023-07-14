@@ -553,9 +553,16 @@ types_of_monsters* types_of_monsters::build_and_return_list (istream& fin)
         }
         index++;
         temp_ptr->after_dialogue [index] = '\0';
-        temp_ptr->ptr = new types_of_monsters;
-        temp_ptr = temp_ptr->ptr;
         count++;
+        if (count < 12)
+        {
+            temp_ptr->ptr = new types_of_monsters;
+            temp_ptr = temp_ptr->ptr;
+        }
+        else
+        {
+            temp_ptr->ptr = nullptr;
+        }
     }
     return firstptr;
 }
