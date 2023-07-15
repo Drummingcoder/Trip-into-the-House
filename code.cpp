@@ -87,18 +87,18 @@ void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& o
             cin.ignore(1000000, '\n');
             cin >> user_choice;
             cout << endl;
-            if (compare_array_and_var (user_choice, valid_letters))
+            if (compare_array_and_var (user_choice, valid_letters)) //valid path
             {
                 pass = true;
                 change_num (num, user_choice);
             }
-            else if (compare_array_and_var (user_choice, not_available_letters))
+            else if (compare_array_and_var (user_choice, not_available_letters)) //under-development path
             {
                 not_valid = false;
                 redisplay (not_valid, pass);
                 cout << endl;
             }
-            else
+            else //invalid path
             {
                 not_valid = true;
                 redisplay (not_valid, pass);
@@ -118,7 +118,7 @@ void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& o
             pass = true;
         }
     } while (pass == false);
-    if (skip == false)
+    if (skip == false) //for special scenes
     {
         cout << "You head that way...\n";
         mon_en (lives, en);
@@ -128,7 +128,7 @@ void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& o
             out_of_lives = true;
         }
     }
-    else
+    else //separate content
     {
         cout << endl;
     }
@@ -179,7 +179,7 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
     bool pass, loop;
     ifstream fin;
     fin.open ("scenarios.txt", ios::app);
-    do
+    do //finds the correct scenario in scenarios.txt
     {
         fin >> temp_num;
         if (num != temp_num)
@@ -207,11 +207,11 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
         read (fin, lives, cave_var);
     }
     fin.get (read_letter);
-    if (read_letter == ';')
+    if (read_letter == ';') //gets the next letter
     {
         fin.get (read_letter);
     }
-    if (read_letter == '(')
+    if (read_letter == '(') //gets the valid letters and invalid letters and reads it out
     {
         fin.get (read_letter);
         max = strlen (valid_letters);
@@ -268,18 +268,18 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
         cout << "): ";
         skip = false;
     }
-    else if (read_letter == '/')
+    else if (read_letter == '/') //ending
     {
         game_over = true;
         skip = true;
     }
-    else if (read_letter == '"' && lives != 0)
+    else if (read_letter == '"' && lives != 0) //investigation monster
     {
         num = 6;
         display (num, lives, game_over, cave_var, valid_letters, not_available_letters, out_of_lives, skip, tenlives);
         skip = false;
     }
-    else if (read_letter == '|')
+    else if (read_letter == '|') //movie scene
     {
         cout << endl << endl << "Save yourself! Answer 10 questions to live, or else you will succumb to the temptation!" << endl;
         original_lives = lives;
@@ -310,7 +310,7 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
             tenlives = true;
         }
     }
-    else if (lives == 0)
+    else if (lives == 0) //game over
     {
         game_over = true;
         skip = true;
@@ -335,7 +335,7 @@ void mon_en (int& lives, forced_mon_en en)
     ifstream fin;
     srand (time(0));
     fin.open ("monsters.txt", ios::app);
-    firstptr = build.build_and_return_list (fin);
+    firstptr = build.build_and_return_list (fin); //builds the linked list
     ran_num = rand() % (100-0) + 0;
     this_thread::sleep_for(chrono::seconds(1));  
     if (en.forced == true)
