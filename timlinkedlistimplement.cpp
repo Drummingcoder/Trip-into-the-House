@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 
+
 types_of_monsters* types_of_monsters::build_and_return_list (istream& fin)
 {
     auto count = 0, index = 0;
@@ -86,6 +87,7 @@ void types_of_monsters::display_before ()
 {
     int index = 0;
     bool pass;
+    vector<char>::iterator p;
     do
     {
         cout << before [index];

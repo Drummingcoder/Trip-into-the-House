@@ -7,6 +7,7 @@
 #include <thread>
 #include <iomanip>
 #include <cstring>
+#include <string>
 #include "timmathfunctions.h"
 #include "timstreamandarr.h"
 #include "timotherfunctions.h"
