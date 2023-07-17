@@ -13,6 +13,7 @@ class types_of_monsters
     void display_before ();
     void display_after ();
     char after_dialogue [60];
+    ~types_of_monsters();
 
     private:
     vector <char> before;

@@ -121,3 +121,8 @@ void types_of_monsters::display_after ()
         }
     } while (pass == false);
 }
+
+   types_of_monsters::~types_of_monsters(){
+    delete [] ptr;
+    delete ptr;
+   }
