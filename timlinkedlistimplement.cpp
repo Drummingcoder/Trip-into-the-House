@@ -1,6 +1,6 @@
 #include "timlinkedlist.h"
 #include <iostream>
-#include <vector>
+#include <string>
 using namespace std;
 
 
@@ -19,22 +19,22 @@ types_of_monsters* types_of_monsters::build_and_return_list (istream& fin)
         fin.get (read);
         for (index = 0; read != '"'; index++)
         {
-            temp_ptr->before.push_back(read);
+            temp_ptr->before += read;
             fin.get (read);
         }
         index++;
-        temp_ptr->before.push_back ('\0');
+        temp_ptr->before += '\0';
         fin >> temp_ptr->num_of_probs;
         fin.get (trash);
         fin.get (trash);
         fin.get (read);
         for (index = 0; read != '"'; index++)
         {
-            temp_ptr->after.push_back(read);
+            temp_ptr->after += read;
             fin.get (read);
         }
         index++;
-        temp_ptr->after_dialogue [index] = '\0';
+        temp_ptr->after += '\0';
         count++;
         if (count < 12)
         {
@@ -85,44 +85,16 @@ void types_of_monsters::change_num_of_probs (int num)
 
 void types_of_monsters::display_before () 
 {
-    int index = 0;
-    bool pass;
-    vector<char>::iterator p;
-    do
-    {
-        cout << before [index];
-        if (index != before.size())
-        {
-            index++;
-            pass = false;
-        }
-        else
-        {
-            pass = true;
-        }
-    } while (pass == false);
+    cout << before;
 }
 
 void types_of_monsters::display_after ()
 {
-    int index = 0;
-    bool pass;
-    do
-    {
-        cout << after [index];
-        if (index != after.size())
-        {
-            index++;
-            pass = false;
-        }
-        else
-        {
-            pass = true;
-        }
-    } while (pass == false);
+    cout << after;
 }
 
-   types_of_monsters::~types_of_monsters(){
+types_of_monsters::~types_of_monsters()
+{
     delete [] ptr;
     delete ptr;
-   }
+}

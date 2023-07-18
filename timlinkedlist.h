@@ -1,6 +1,7 @@
 //This is the INTERFACE for timlinkedlist.
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 class types_of_monsters
@@ -12,12 +13,11 @@ class types_of_monsters
     void change_num_of_probs (int num);
     void display_before ();
     void display_after ();
-    char after_dialogue [60];
     ~types_of_monsters();
 
     private:
-    vector <char> before;
-    vector <char> after;
+    string before;
+    string after;
     int id_num;
     int num_of_probs;
     types_of_monsters *ptr;

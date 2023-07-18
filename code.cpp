@@ -445,7 +445,7 @@ void read (ifstream& fin, int& lives, bool& cave_var)
     fin.get (read_letter);
     do
     {
-        this_thread::sleep_for(chrono::milliseconds(30));
+        //this_thread::sleep_for(chrono::milliseconds(30));
         if (read_letter != '|')
         {
             cout.put(read_letter);
