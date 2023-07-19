@@ -1,12 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <vector>
 #include "timstreamandarr.h"
 #include "timmathfunctions.h"
 #include "timotherfunctions.h"
 using namespace std;
 
-bool compare_array_and_var (char user_choice, char compare [])
+bool compare_array_and_var (char user_choice, vector<char> compare)
 {
     int index = 0;
     bool found = false, pass;
@@ -17,7 +18,7 @@ bool compare_array_and_var (char user_choice, char compare [])
             pass = true;
             found = true;
         }
-        else if (index != strlen (compare))
+        else if (index != compare.size())
         {
             index++;
             pass = false;

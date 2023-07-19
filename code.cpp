@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cstring>
 #include <string>
+#include <vector>
 #include "timmathfunctions.h"
 #include "timstreamandarr.h"
 #include "timotherfunctions.h"
@@ -26,7 +27,7 @@ void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& o
 void change_num (int& num, char user_choice);
 //Precondition: num must be within 1-15 with some exceptions, user_choice must be valid
 //Postcondition: num will be changed accordingly to the value of num and user_choice
-void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_letters [], char not_available_letters[], bool& out_of_lives, bool& skip, bool& tenlives);
+void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <char> valid_letters, vector <char> not_available_letters, bool& out_of_lives, bool& skip, bool& tenlives);
 //Precondition: num must be a number in scenarios.txt
 //Postcondition: Displays text from scenarios.txt accordingly to the value of num and sets the values of game_over, cave_var, skip, valid_letters, not_available_letters according to scenarios.txt. (last two for comparision for main_looper)
 //When reading a '|' in scenarios.txt, it will run rand_math_prob 10 times and set tenlives accordingly to whether or not lives remained the same
@@ -76,7 +77,7 @@ int main ()
 
 void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& out_of_lives)
 {
-    char valid_letters [4], not_available_letters [4];
+    vector <char> valid_letters, not_available_letters;
     bool pass, not_valid, skip, tenlives;
     char user_choice;
     forced_mon_en en;
@@ -173,7 +174,7 @@ void change_num (int& num, char user_choice)
         num = 18;
 }
 
-void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_letters [], char not_available_letters[], bool& out_of_lives, bool& skip, bool& tenlives)
+void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <char> valid_letters, vector <char> not_available_letters, bool& out_of_lives, bool& skip, bool& tenlives)
 {
     char letter, wait, trash, read_letter;
     int temp_num, max, index, original_lives;
@@ -215,12 +216,12 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
     if (read_letter == '(') //gets the valid letters and invalid letters and reads it out
     {
         fin.get (read_letter);
-        max = strlen (valid_letters);
+        max = valid_letters.size();
         for (int index = 0; index != max; index++)
         {
             valid_letters [index] = '\0';
         }
-        max = strlen (not_available_letters);
+        max = not_available_letters.size();
         for (int index = 0; index != max; index++)
         {
             not_available_letters [index] = '\0';
@@ -241,25 +242,25 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, char valid_
         }
         else
         {
-            max = strlen (not_available_letters);
+            max = not_available_letters.size();
             for (int index = 0; index != max; index++)
             {
                 not_available_letters [index] = '\0';
             }
         }
         cout << " (";
-        for (auto index = 0; index != strlen (valid_letters); index++)
+        for (auto index = 0; index != valid_letters.size(); index++)
         {
             letter = valid_letters [index];
             cout << letter;
-            if (index != (strlen (valid_letters) - 1))
+            if (index != (valid_letters.size() - 1))
             {
                 cout << '/';
             }
         }
-        for (auto index = 0; index != strlen (not_available_letters); index++)
+        for (auto index = 0; index != not_available_letters.size(); index++)
         {
-            if (index != strlen (not_available_letters))
+            if (index != not_available_letters.size())
             {
                 cout << '/';
             }

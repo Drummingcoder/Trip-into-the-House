@@ -1,8 +1,9 @@
 //This is the INTERFACE of timstreamandarr
 #include <iostream>
+#include <vector>
 using namespace std;
 
-bool compare_array_and_var (char user_choice, char compare []);
+bool compare_array_and_var (char user_choice, vector<char> compare);
 //Precondition: compare is not empty
 //Postcondition: Checks the value of user_choice to each value of the array compare. Returns true if user_choice is in the array, else returns false
 void display_arr (char arr []);
