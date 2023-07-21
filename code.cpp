@@ -27,7 +27,7 @@ void main_looper (int& num, bool& game_over, bool& cave_var, int& lives, bool& o
 void change_num (int& num, char user_choice);
 //Precondition: num must be within 1-15 with some exceptions, user_choice must be valid
 //Postcondition: num will be changed accordingly to the value of num and user_choice
-void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <char> valid_letters, vector <char> not_available_letters, bool& out_of_lives, bool& skip, bool& tenlives);
+void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <char>& valid_letters, vector <char>& not_available_letters, bool& out_of_lives, bool& skip, bool& tenlives);
 //Precondition: num must be a number in scenarios.txt
 //Postcondition: Displays text from scenarios.txt accordingly to the value of num and sets the values of game_over, cave_var, skip, valid_letters, not_available_letters according to scenarios.txt. (last two for comparision for main_looper)
 //When reading a '|' in scenarios.txt, it will run rand_math_prob 10 times and set tenlives accordingly to whether or not lives remained the same
@@ -174,7 +174,7 @@ void change_num (int& num, char user_choice)
         num = 18;
 }
 
-void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <char> valid_letters, vector <char> not_available_letters, bool& out_of_lives, bool& skip, bool& tenlives)
+void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <char>& valid_letters, vector <char>& not_available_letters, bool& out_of_lives, bool& skip, bool& tenlives)
 {
     char letter, wait, trash, read_letter;
     int temp_num, max, index, original_lives;
@@ -228,7 +228,7 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <cha
         }
         for (int index = 0; read_letter != ',' && read_letter != ')'; index++)
         {
-            valid_letters [index] = read_letter;
+            valid_letters.push_back (read_letter);
             fin.get (read_letter);
         }
         if (read_letter == ',')
@@ -236,7 +236,7 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <cha
             fin.get (read_letter);
             for (int index = 0; read_letter != ')'; index++)
             {
-                not_available_letters [index] = read_letter;
+                not_available_letters.push_back (read_letter);
                 fin.get (read_letter);
             }
         }

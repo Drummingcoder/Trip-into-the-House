@@ -92,9 +92,3 @@ void types_of_monsters::display_after ()
 {
     cout << after;
 }
-
-types_of_monsters::~types_of_monsters()
-{
-    delete [] ptr;
-    delete ptr;
-}

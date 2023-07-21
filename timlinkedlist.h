@@ -13,7 +13,6 @@ class types_of_monsters
     void change_num_of_probs (int num);
     void display_before ();
     void display_after ();
-    ~types_of_monsters();
 
     private:
     string before;
