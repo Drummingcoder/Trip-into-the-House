@@ -228,7 +228,17 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <cha
         }
         for (int index = 0; read_letter != ',' && read_letter != ')'; index++)
         {
-            valid_letters.push_back (read_letter);
+            if (index != valid_letters.size())
+            {
+                if (valid_letters [0] == '\0')
+                    valid_letters [0] = read_letter;
+                else
+                    valid_letters [index] = read_letter;
+            }
+            else
+            {
+                valid_letters.push_back (read_letter);
+            }
             fin.get (read_letter);
         }
         if (read_letter == ',')
@@ -236,7 +246,16 @@ void display (int& num, int& lives, bool& game_over, bool& cave_var, vector <cha
             fin.get (read_letter);
             for (int index = 0; read_letter != ')'; index++)
             {
-                not_available_letters.push_back (read_letter);
+                if (index != not_available_letters.size())
+                {
+                    if (not_available_letters [0] == '\0')
+                        not_available_letters [0] = read_letter;
+                    else
+                        not_available_letters [index] = read_letter;
+                }
+                else {
+                    not_available_letters.push_back (read_letter);
+                }
                 fin.get (read_letter);
             }
         }
